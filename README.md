@@ -8,9 +8,26 @@ This project is not associated or affiliated with Obsidian.
 >> - [setNodeType()](#setnodetypenodetype-int)
 >> - [__isType()](#__istypevalue-typeneeded-int)
 >> - [__getCoord()](#__getcoordcoordtype-int)
+>> - [getX()](#getx)
+>> - [setX()](#setxx-int)
+>> - [getY()](#gety)
+>> - [setY()](#setyy-int)
+>> - [getHeight()](#getheight)
+>> - [setHeight()](#setheightheight-int)
+>> - [getWidth()](#getwidth)
+>> - [getID()](#getid)
+>> - [setID()](#setidid-int)
+>> - [setColor()](#setcolorcolor)
+>> - [getAddressValue()](#getaddressvalue)
+>> - [setAddressValue()](#setaddressvalueaddressvalue)
+>> - [getSubpath()](#getsubpath)
+>> - [setSubpath()](#setsubpathsubpath)
 
 ## Nodes Class:
+---
 Class for working with individual nodes.
+
+---
 
 ### getNodeType(asInt = False)
 ---
@@ -59,54 +76,67 @@ coordType: int
 Raises TypeError if type is not int.
 
 ### getX()
+---
 Returns the int value of x coordinate.
 
 Raises TypeError if x is not of type int.
 
 ### setX(x: int)
+---
 Set int value for x coordinate.
 
 ### getY()
+---
 Returns the int value of y coordinate.
 
 Raises TypeError if y is not of type int.
 
 ### setY(y: int)
+---
 Set int value for y coordinate.
 
 ### getHeight()
+---
 Returns int value of height coordinate.
 
 Raises TypeError if height is not of type int.
 
 ### setHeight(height: int)
+---
 Set int value for height coordinate.
 
 ### getWidth()
+---
 Returns int value of width.
 
 Raises TypeError if width is not of type int.
 
 ### setWidth(width: int)
+---
 Set int value for width.
 
 ### getID()
+---
 Returns str of id.
 
 Raises TypeError if id is not str.
 
-### setID(id: int) 
+### setID(id: int)
+---
 Set id value.
 
 ### setColor(color)
+---
 Get str of color.
 
 Raises TypeError if color is not str.
 
 ### getAddressValue()
+---
 Returns file for file type nodes and label for all other node types.
 
-### setAddressValue()
+### setAddressValue(addressValue)
+---
 Sets addressValue for Node.
 
 Address value correlates to different Node variables depending on type of Node:
@@ -114,3 +144,17 @@ Address value correlates to different Node variables depending on type of Node:
 - 2: group = label - Note: label is optional.
 - 3: text = text
 - 4: link = url
+
+### getSubpath()
+---
+ Returns subpath for file types.
+
+If subpath not set, returns None.
+
+Raises error if accessed on Nodes that are not of type file.
+
+### setSubpath(subpath)
+---
+Sets subpath to provided str. If type provided is not str, sets subpath to None.
+
+Raises error if accessed on Nodes that are not of type file.
