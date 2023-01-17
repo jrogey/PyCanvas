@@ -17,6 +17,7 @@ This project is not associated or affiliated with Obsidian.
 >> - [getWidth()](#getwidth)
 >> - [getID()](#getid)
 >> - [setID()](#setidid-int)
+>> - [getColor()](#getcolor)
 >> - [setColor()](#setcolorcolor)
 >> - [getAddressValue()](#getaddressvalue)
 >> - [setAddressValue()](#setaddressvalueaddressvalue)
@@ -124,6 +125,11 @@ Raises TypeError if id is not str.
 ### setID(id: int)
 ---
 Set id value.
+
+### getColor()
+Get str of color.
+
+Raises TypeError if color is not str or None.
 
 ### setColor(color)
 ---

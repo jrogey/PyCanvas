@@ -191,9 +191,11 @@ class Nodes:
         '''
         Get str of color.
 
-        Raises TypeError if color is not str.
+        Raises TypeError if color is not str or None.
         '''
         if self.__isType(2):
+            return self.color
+        elif self.color == None:
             return self.color
         else:
             raise TypeError("Unrecognized type:" + type(self.color))
