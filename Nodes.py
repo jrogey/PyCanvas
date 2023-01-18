@@ -5,7 +5,7 @@ class Node(EdgeNode):
     An individual object in a Canvas such as a file, group, text, or link.
     '''
     def __init__(self, id: str, x: int, y: int, width: int, height: int, nodeType: int, addressValue = None, color = None, subpath = None):
-        super().__init__(id, color)
+        super(Node, self).__init__(id, color)
         self.setX(x)
         self.setY(y)
         self.setWidth(width)
@@ -63,15 +63,15 @@ class Node(EdgeNode):
 
         Raises ValueError if type value is outside of expected range 1-4.
         '''
-        if self.__isType(1, self.nodeType):
+        if self.isType(1, nodeType):
             if nodeType < 1 or nodeType > 4:
-                raise ValueError("Unrecognized value error"  + str(self.nodeType))
+                raise ValueError("Unrecognized value error"  + str(nodeType))
             else:
                 self.nodeType = nodeType
         else:
-            raise TypeError("Unrecognized type: " + type(self.nodeType))
+            raise TypeError("Unrecognized type: " + str(type(nodeType)))
 
-    def __getCoord(self, coordType: int):
+    def getCoord(self, coordType: int):
         '''
         Generic function to check type of coord and return value.
 
@@ -83,7 +83,7 @@ class Node(EdgeNode):
         
         Raises TypeError if type is not int.
         '''
-        if self.__isType(coordType, 1):
+        if self.isType(coordType, 1):
             if coordType == 1:
                 return self.x
             elif coordType == 2:
@@ -101,7 +101,7 @@ class Node(EdgeNode):
 
         Raises TypeError if x is not of type int.
         '''
-        return self.__getCoord(1)
+        return self.getCoord(1)
 
     def setX(self, x: int):
         '''
@@ -115,7 +115,7 @@ class Node(EdgeNode):
 
         Raises TypeError if y is not of type int.
         '''
-        return self.__getCoord(2)
+        return self.getCoord(2)
 
     def setY(self, y: int):
         '''
@@ -129,7 +129,7 @@ class Node(EdgeNode):
 
         Raises TypeError if height is not of type int.
         '''
-        return self.__getCoord(3)
+        return self.getCoord(3)
 
     def setHeight(self, height: int):
         '''
@@ -143,7 +143,7 @@ class Node(EdgeNode):
 
         Raises TypeError if width is not of type int.
         '''
-        return self.__getCoord(4)
+        return self.getCoord(4)
 
     def setWidth(self, width: int):
         '''
@@ -157,7 +157,7 @@ class Node(EdgeNode):
         '''
         Returns file for file type nodes and label for all other node types.
         '''
-        if self.__isType(2, self.addressValue):
+        if self.isType(2, self.addressValue):
             return self.addressValue
 
     def setAddressValue(self, addressValue):
@@ -172,7 +172,7 @@ class Node(EdgeNode):
         '''
         if self.getNodeType(True) == 2 and (addressValue == None or addressValue == ""):
             self.addressValue = None
-        elif self.__isType(2, addressValue):
+        elif self.isType(2, addressValue):
             self.addressValue = addressValue
         else:
             raise TypeError("Unrecognized type for Node type addressValue: Node type is: " + type(self.getNodeType()) + ", and addressValue type is: " + type(addressValue))
@@ -186,7 +186,7 @@ class Node(EdgeNode):
         Raises error if accessed on Nodes that are not of type file.
         '''
         if self.nodeType(True) == 1:
-            if self.__isType(2, self.subpath):
+            if self.isType(2, self.subpath):
                 return self.subpath
             else:
                 return None
@@ -199,8 +199,8 @@ class Node(EdgeNode):
 
         Raises error if accessed on Nodes that are not of type file.
         '''
-        if self.nodeType(True) == 1:
-            if self.__isType(2, subpath):
+        if self.getNodeType(True) == 1:
+            if self.isType(2, subpath):
                 self.subpath = subpath
             else:
                 self.subpath = None
@@ -209,6 +209,6 @@ class Node(EdgeNode):
         else:
             raise TypeError("Cannot access subpath on non-file Node: Node type is" + self.getNodeType() + "subpath type is: " + type(subpath))
         
-node = Node("ff7e7775bba2d8a5", -628, -200, 400, 400, "file", "Software/Software.md")
+# node = Node("ff7e7775bba2d8a5", -628, -200, 400, 400, 1, "Software/Software.md")
 
 # print(str(node.getX()))

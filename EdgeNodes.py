@@ -6,7 +6,7 @@ class EdgeNode():
         self.setID(id)
         self.setColor(color)
 
-    def __isType(self, typeNeeded: int, value):
+    def isType(self, typeNeeded: int, value):
         '''
         Type check to ensure input is of a specific type:
         - 1 = int
@@ -36,7 +36,7 @@ class EdgeNode():
 
         Raises TypeError if id is not str.
         '''
-        if self.__isType(2, self.id):
+        if self.isType(2, self.id):
             return self.id
         else:
             raise TypeError("Unrecognized type: " + str(type(self.id)))
@@ -53,7 +53,7 @@ class EdgeNode():
 
         Raises TypeError if color is not str or None.
         '''
-        if self.__isType(2, self.color):
+        if self.isType(2, self.color):
             return self.color
         elif self.color == None:
             return self.color
@@ -64,7 +64,7 @@ class EdgeNode():
         '''
         Sets str for color.
         '''
-        if self.__isType(2, color):
+        if self.isType(2, color):
             self.color = color
         elif color == None:
             self.color = None
