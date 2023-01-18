@@ -1,13 +1,17 @@
-class Nodes:
-    def __init__(self, id: str, x: int, y: int, width: int, height: int, nodeType: int, addressValue = None,  color = None, subpath = None):
-        self.setID(id)
+from EdgeNodes import EdgeNode
+
+class Node(EdgeNode):
+    '''
+    An individual object in a Canvas such as a file, group, text, or link.
+    '''
+    def __init__(self, id: str, x: int, y: int, width: int, height: int, nodeType: int, addressValue = None, color = None, subpath = None):
+        super().__init__(id, color)
         self.setX(x)
         self.setY(y)
         self.setWidth(width)
         self.setHeight(height)
         self.setNodeType(nodeType)
         self.setAddressValue(addressValue)
-        self.setColor(color)
         if self.getNodeType(True) == 1:
             self.setSubpath(subpath)
         
@@ -67,29 +71,6 @@ class Nodes:
         else:
             raise TypeError("Unrecognized type: " + type(self.nodeType))
 
-    def __isType(self, value, typeNeeded: int):
-            '''
-            Type check to ensure input is of a specific type:
-            - 1 = int
-            - 2 = str
-
-            Returns True if type matches requested type and False if types do not match.
-
-            Raises ValueError if typeNeeded is outside of range 1-2.
-            '''
-            typeToCheck = None
-            if typeNeeded == 1:
-                typeToCheck = int
-            elif typeNeeded == 2:
-                typeToCheck = str
-            else:
-                raise ValueError("Unrecognized value error:" + str(typeNeeded))
-                return None
-            if type(value) == typeToCheck:
-                return True
-            else:
-                return False
-
     def __getCoord(self, coordType: int):
         '''
         Generic function to check type of coord and return value.
@@ -102,7 +83,7 @@ class Nodes:
         
         Raises TypeError if type is not int.
         '''
-        if self.__isType(self, coordType, 1):
+        if self.__isType(coordType, 1):
             if coordType == 1:
                 return self.x
             elif coordType == 2:
@@ -170,46 +151,7 @@ class Nodes:
         '''
         self.width = width
 
-    def getID(self):
-        '''
-        Returns str of id.
-
-        Raises TypeError if id is not str.
-        '''
-        if self.__isType(2):
-            return self.id
-        else:
-            raise TypeError("Unrecognized type:" + type(self.id))
-
-    def setID(self, id: str):
-        '''
-        Set id value.
-        '''
-        self.id = id
-
-    def getColor(self):
-        '''
-        Get str of color.
-
-        Raises TypeError if color is not str or None.
-        '''
-        if self.__isType(2):
-            return self.color
-        elif self.color == None:
-            return self.color
-        else:
-            raise TypeError("Unrecognized type:" + type(self.color))
     
-    def setColor(self, color):
-        '''
-        Sets str for color.
-        '''
-        if self.__isType(2, color):
-            self.color = color
-        elif color == None:
-            self.color = None
-        else:
-            raise TypeError("Unrecognized type for color: " + type(color))
 
     def getAddressValue(self):
         '''
@@ -235,7 +177,6 @@ class Nodes:
         else:
             raise TypeError("Unrecognized type for Node type addressValue: Node type is: " + type(self.getNodeType()) + ", and addressValue type is: " + type(addressValue))
 
-        
     def getSubpath(self):
         '''
         Returns subpath for file types.
@@ -267,3 +208,7 @@ class Nodes:
                 self.subpath = None
         else:
             raise TypeError("Cannot access subpath on non-file Node: Node type is" + self.getNodeType() + "subpath type is: " + type(subpath))
+        
+node = Node("ff7e7775bba2d8a5", -628, -200, 400, 400, "file", "Software/Software.md")
+
+# print(str(node.getX()))
