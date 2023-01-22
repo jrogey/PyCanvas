@@ -6,12 +6,15 @@ class Edge(EdgeNode):
     A link between two nodes with an arrow pointing from one to the other.
     '''
     def __init__(self, id: str, fromNode: Node, fromSide, toNode: Node, toSide, color = None, label = None):
+        # Color and id set during super init within EdgeNode superclass.
         super(Edge, self).__init__(id, color)
         # Nodes must be set before direction.
+        self.setNode(fromSide, 1)
+        self.setNode(toSide, 2)
         self.setDirection(fromSide, 1)
         self.setDirection(toSide, 2)
 
-    def isNode(value):
+    def isNode(self, value):
         '''
         Check if input type is a Node object.
 
@@ -94,7 +97,75 @@ class Edge(EdgeNode):
             return "toSide"
         else:
             raise ValueError("Unexpected input for nodesource: " + str(nodesource)) 
+
+    def getNode(self, nodeSource, forceAsNode = True):
+        # Ensure node source is in Int format regardless of input.
+        nodeSource = self.determineNodeSourceInt(nodeSource)
+        node = None
+        if nodeSource == 1:
+            node = self.fromNode
+        elif nodeSource == 2:
+            node = self.toNode
+        else:
+            raise ValueError("Unexpected input for nodeSource. Must be int 1-2 or string 'fromSide' or 'toSide'. Input:" + type(nodeSource) + " Value:" + str(nodeSource))
+        if self.isNode(node):
+            return node
+        # If forceAsNode is off, allows Node with value of None to be returned as None. 
+        # Otherwise forces a TypeError if Node is set to None.
+        if node == None and forceAsNode == False:
+            return None
+        else:
+            raise TypeError("Unepected object as nodeSource. Input: " + type(self.node))
     
+    def setNode(self, node, nodeSource, forceAsNode = True):
+        '''
+        Sets Node value based on nodeSource indicating whether Node is set to toNode or fromNode. 
+        toNode is the Node object to which the Edge's arrow will be pointing on the canvas.
+
+        If forceAsNode is set to False (opposite of default behavior) Node object can also be set to None.
+        None will raise a TypeError if forceAsNode is left at default value of True.
+        Any other type of object will raise a TypeError.
+        '''
+        # Ensure node source is in Int format regardless of input.
+        nodeSource = self.determineNodeSourceInt(nodeSource)
+        if self.isNode(node):
+            if nodeSource == 1:
+                self.fromNode = node
+            elif nodeSource == 2:
+                self.toNode = node
+            else:
+                raise ValueError("Unexpected int value. Input: " + str(nodeSource))
+        elif node == None and forceAsNode == False:
+            if nodeSource == 1:
+                self.fromNode = None
+            elif nodeSource == 2:
+                self.toNode = None
+            else:
+                raise ValueError("Unexpected int value. Input: " + str(nodeSource))
+        else:
+            raise TypeError("Unexpected type input. Expected Node. Input: " + type(node))
+        
+    def checkForMatchNode(self, node: Node, nodeSource):
+        '''
+        Check to see if opposite Node matches. Helps to ensure that the same Node object is 
+        not put as both the fromSide and toSide nodes.
+
+        Returns True if the opposite Node is the same (either )
+        '''
+        nodeSource = self.determineNodeSourceInt(nodeSource)
+        if self.isNode(node):
+            if nodeSource == 1:
+                if self.getNode(1) != None:
+                    if node == self.getNode(2):
+                        return True
+                    else:
+                        return False
+            elif nodeSource == 2:
+                if node == self.getNode(1):
+                    return True
+                else: 
+                    return False
+
     def getDirectionfromInt(self, intInput):
         '''
         Based in int input, returns a string for the correlating side.

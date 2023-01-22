@@ -5,6 +5,7 @@ class Node(EdgeNode):
     An individual object in a Canvas such as a file, group, text, or link.
     '''
     def __init__(self, id: str, x: int, y: int, width: int, height: int, nodeType: int, addressValue = None, color = None, subpath = None):
+        # Color and id set during super init within EdgeNode superclass.
         super(Node, self).__init__(id, color)
         self.setX(x)
         self.setY(y)
