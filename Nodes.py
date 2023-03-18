@@ -152,8 +152,6 @@ class Node(EdgeNode):
         '''
         self.width = width
 
-    
-
     def getAddressValue(self):
         '''
         Returns file for file type nodes and label for all other node types.

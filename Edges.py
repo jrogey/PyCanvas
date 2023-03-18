@@ -71,7 +71,7 @@ class Edge(EdgeNode):
         else:
             raise TypeError("nodeSource must be str: 'fromSide' or 'toSide', int value between 1-2, or Node object. Input detected: " + type(nodeSource))
     
-    def determineNodeSourceString(self, nodesource):
+    def determineNodeSourceString(self, nodeSource):
         '''
         Check to see if input is the fromSide Node or the toSide Node.
 
@@ -90,15 +90,31 @@ class Edge(EdgeNode):
 
         Raises a TypeError if input is not int, str, or Node.
         '''
-        source = self.determineNodeSourceInt(nodesource)
+        source = self.determineNodeSourceInt(nodeSource)
         if source == 1:
             return "fromSide"
         elif source == 2:
             return "toSide"
         else:
-            raise ValueError("Unexpected input for nodesource: " + str(nodesource)) 
+            raise ValueError("Unexpected input for nodesource: " + str(nodeSource)) 
 
     def getNode(self, nodeSource, forceAsNode = True):
+        '''
+         Returns a Node object for either the fromNode or toNode 
+         based on passed in int:
+         - 1: fromNode
+         - 2: toNode
+
+         toNode is the Node object to which the Edge's arrow will be pointing on the canvas.
+
+         If forceAsNode parameter is set to False can also return None.
+         forceAsNode parameter is set to True by default.
+
+         Raises ValueError if int input is outside expected range.
+
+         Raises TypeError if type input is unexpected or if requested 
+         Node object is set to None with forceAsNode parameter set to True.
+        '''
         # Ensure node source is in Int format regardless of input.
         nodeSource = self.determineNodeSourceInt(nodeSource)
         node = None
@@ -150,7 +166,7 @@ class Edge(EdgeNode):
         Check to see if opposite Node matches. Helps to ensure that the same Node object is 
         not put as both the fromSide and toSide nodes.
 
-        Returns True if the opposite Node is the same (either )
+        Returns True if the opposite Node is the same.
         '''
         nodeSource = self.determineNodeSourceInt(nodeSource)
         if self.isNode(node):
@@ -259,6 +275,29 @@ class Edge(EdgeNode):
             raise TypeError("Unexpected error getting node direction: " + str(self))
 
     def setDirection(self, direction, nodeSource):
+        '''
+        Sets the direction from which an Edge is coming or going.
+
+        Sides are numbered in clock-wise order starting with top:
+
+        - 1: top
+        - 2: right
+        - 3: bottom
+        - 4: right
+
+        Accepts: 
+        - string 'fromSide' or 'toSide'
+        - int values 1-2
+        - Node object if Node is set as fromNode or toNode.
+
+        Raises a ValueError in three conditions:
+        - int detected, but outside accepted range.
+        - str detected, but does not match required strings.
+        - Node detected, but does not match either Node set on object.
+
+        Raises a ValueError if int input for direction is outside expected range (1-4).
+        Raises a TypeError if input is not int, str, or Node.
+        '''
         node = self.determineNodeSourceInt(nodeSource)
 
         if self.isType(1, direction):
@@ -273,7 +312,7 @@ class Edge(EdgeNode):
             directionInt = self.getDirectionfromStr(direction)
             if node == 1:
                 self.fromSide = directionInt
-            elif node ==2:
+            elif node == 2:
                 self.fromSide = directionInt
         else:
             raise TypeError("Unexpected type as direction. Accepts str, int, or Node. Input: " + type(direction))

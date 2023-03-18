@@ -63,6 +63,8 @@ class EdgeNode():
     def setColor(self, color):
         '''
         Sets str for color.
+
+        Raises TypeError if input is not str or None.
         '''
         if self.isType(2, color):
             self.color = color
