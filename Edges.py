@@ -138,8 +138,14 @@ class Edge(EdgeNode):
         Sets Node value based on nodeSource indicating whether Node is set to toNode or fromNode. 
         toNode is the Node object to which the Edge's arrow will be pointing on the canvas.
 
-        If forceAsNode is set to False (opposite of default behavior) Node object can also be set to None.
+        - node: The Node object to which the Edge will be connected
+        - nodeSource: Determines if the Node being set is being pointed to or from by the Edge.
+        - forceAsNode: Defaults to True. When False allows specified Node to be set to None.
+
+        If forceAsNode is set to False (opposite of default behavior) Node object can also be 
+        set to None.
         None will raise a TypeError if forceAsNode is left at default value of True.
+
         Any other type of object will raise a TypeError.
         '''
         # Ensure node source is in Int format regardless of input.
@@ -317,3 +323,16 @@ class Edge(EdgeNode):
         else:
             raise TypeError("Unexpected type as direction. Accepts str, int, or Node. Input: " + type(direction))
 
+    def invertArrow(self):
+        '''
+        Inverts the direction for the arrow pointing between two nodes.
+        '''
+        # Save current node values.
+        currentlyPointing = self.getNode(1)
+        wantToPoint = self.getNode(2)
+        # Clear node values.
+        self.setNode(None, 1, False)
+        self.setNode(None, 2, False)
+        # Set nodes back with arrow direction reversed.
+        self.setNode(wantToPoint, 1)
+        self.setNode(currentlyPointing, 2)

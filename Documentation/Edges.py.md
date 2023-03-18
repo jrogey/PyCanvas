@@ -12,6 +12,7 @@
 > - [getDirectionfromStr()](#getdirectionfromstrstrinput)
 > - [getDirection()](#getdirectionnodesource-asint--false)
 > - [setDirection()](#setdirectiondirection-nodesource)
+> - [invertArrow()](#invertarrow)
 
 
 ## isNode(value)
@@ -79,8 +80,14 @@ Node object is set to None with forceAsNode parameter set to True.
 Sets Node value based on nodeSource indicating whether Node is set to toNode or fromNode. 
 toNode is the Node object to which the Edge's arrow will be pointing on the canvas.
 
-If forceAsNode is set to False (opposite of default behavior) Node object can also be set to None.
+- node: The Node object to which the Edge will be connected
+- nodeSource: Determines if the Node being set is being pointed to or from by the Edge.
+- forceAsNode: Defaults to True. When False allows specified Node to be set to None.
+
+If forceAsNode is set to False (opposite of default behavior) Node object can also be 
+set to None.
 None will raise a TypeError if forceAsNode is left at default value of True.
+
 Any other type of object will raise a TypeError.
 
 ## checkForMatchNode(node: Node, nodeSource)
@@ -164,3 +171,7 @@ Raises a ValueError in three conditions:
 
 Raises a ValueError if int input for direction is outside expected range (1-4).
 Raises a TypeError if input is not int, str, or Node.
+
+## invertArrow()
+---
+Inverts the direction for the arrow pointing between two nodes.
